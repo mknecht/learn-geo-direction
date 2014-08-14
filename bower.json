@@ -1,0 +1,23 @@
+{
+  "name": "learn-geo-direction",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mknecht/learn-geo-direction",
+  "authors": [
+    "Murat Knecht"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "MovableType-LatLon": "*",
+    "d3": "~3.4.11",
+    "requirejs": "~2.1.14",
+    "jquery": "~2.1.1"
+  }
+}

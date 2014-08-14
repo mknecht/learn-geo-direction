@@ -1,0 +1,26 @@
+{
+  "name": "learn-geo-direction",
+  "version": "0.0.0",
+  "description": "learn-geo-direction ===================",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mknecht/learn-geo-direction.git"
+  },
+  "author": "Murat Knecht",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mknecht/learn-geo-direction/issues"
+  },
+  "devDependencies": {
+    "gulp-util": "~3.0.0",
+    "gulp-mocha": "~0.5.2",
+    "gulp": "~3.8.7",
+    "gulp-jshint": "~1.8.4",
+    "gulp-connect": "~2.0.6",
+    "gulp-watch": "~0.6.9"
+  }
+}
