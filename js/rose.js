@@ -2,15 +2,20 @@
 
 require.config({
   baseUrl: './',
+  shim: {
+    mtlatlon: {
+      exports: 'LatLon'
+    }
+  },
   paths: {
     d3: 'bower_components/d3/d3.min',
-    jquery: 'bower_components/jquery/dist/jquery.min'
-    // mtlatlon: 'bower_components/MovableType-LatLon/mtlatlon'
+    jquery: 'bower_components/jquery/dist/jquery.min',
+    mtlatlon: 'bower_components/MovableType-LatLon/mtlatlon'
   }
 });
 
 require(
-  ['jquery', 'd3'],
+  ['jquery', 'd3', 'mtlatlon'],
   function($, d3, LatLon) {
 
     $(function() {
@@ -50,16 +55,16 @@ require(
       }
 
       // London
-      // var point_of_origin = LatLon(51.507222, -0.1275)
+      var point_of_origin = LatLon(51.507222, -0.1275)
 
-      // var destinations = [
-      //   {label: "Cape Town", loc: LatLon(-33.925278, 18.423889)},
-      //   {label: "Castletown", loc: LatLon(54.074167, -4.653889)},
-      //   {label: "Hastings", loc: LatLon(50.856302, 0.572875)},
-      //   {label: "New York", loc: LatLon( 43, -75)},
-      //   {label: "Paris", loc: LatLon(48.8567, 2.3508)},
-      //   {label: "Warsaw", loc: LatLon( 52.233333, 21.016667)},
-      // ]
+      var destinations = [
+        {label: "Cape Town", loc: LatLon(-33.925278, 18.423889)},
+        {label: "Castletown", loc: LatLon(54.074167, -4.653889)},
+        {label: "Hastings", loc: LatLon(50.856302, 0.572875)},
+        {label: "New York", loc: LatLon( 43, -75)},
+        {label: "Paris", loc: LatLon(48.8567, 2.3508)},
+        {label: "Warsaw", loc: LatLon( 52.233333, 21.016667)},
+      ]
 
       function startNewRound() {
 
