@@ -1,8 +1,8 @@
 /*global jQuery */
 
 define(
-  ['jquery', 'd3', 'mtlatlon'],
-  function($, d3, LatLon) {
+  ['jquery', 'd3', 'mtlatlon', 'geo'],
+  function($, d3, LatLon, geo) {
     function getSelectors() {
       function sp() {
         return $.extend([], arguments).join(" ")
@@ -38,21 +38,6 @@ define(
       }
     }
 
-    // London
-    var point_of_origin = LatLon(51.507222, -0.1275)
-
-    var destinations = [
-      {label: "Cape Town", loc: LatLon(-33.925278, 18.423889)},
-      {label: "Castletown", loc: LatLon(54.074167, -4.653889)},
-      {label: "Hastings", loc: LatLon(50.856302, 0.572875)},
-      {label: "New York", loc: LatLon( 43, -75)},
-      {label: "Paris", loc: LatLon(48.8567, 2.3508)},
-      {label: "Warsaw", loc: LatLon( 52.233333, 21.016667)},
-    ]
-
-    function startNewRound() {
-
-    }
     var $w = $(window)
 
     var hfull = $w.height()
@@ -90,6 +75,10 @@ define(
 
     }
 
+    function updateDestination(label) {
+      $('#destination').text("In which direction is " + label + "?")
+    }
+
     function insertRoseSvg(roseElement) {
       var $rosediv = $('<div id="rosediv"></div').appendTo('body')
       $rosediv
@@ -116,6 +105,8 @@ define(
         })
       },
       startNewRound: function() {
+        geo.chooseNewDestination()
+        updateDestination(geo.destination.label)
       },
       startGame: function() {
         // react to mousemovement

@@ -25,3 +25,14 @@ path.selector {
     stroke: rgba(255, 184, 28, 1);
     fill: rgba(255, 184, 28, .3);
 }
+
+div#destination {
+    font-size: 2em;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 1em;
+    width: 100%;
+    z-index: 1000;
+}
