@@ -37,15 +37,20 @@ require(
 
       var centerx = hhalf;
       var centery = hhalf;
-      var selectionRadius = hquarter;
+      var selectionRadius = hquarter + 5;
+      var outofsight = Math.max($w.width(), $w.height()) * 2
 
       var selector = interact.append('path')
       .attr('class', 'selector')
       .attr('d', sp(
         'M', p(centerx, centery),
-        'm', p(0, -(selectionRadius + 5)),
-        'a', p(hquarter, hquarter), '0', '0,0', p(-(hquarter + 5), hquarter + 10),
-        'l', p(0, -(hquarter + 10)),
+        'm', p(0, -selectionRadius),
+        'l', p(0, -outofsight),
+        'l', p(outofsight, 0),
+        'l', p(0, 2 * outofsight + 2 * selectionRadius),
+        'l', p(-outofsight, 0),
+        'l', p(0, -outofsight),
+        'a', p(hquarter, hquarter), '0', '0,0', p(0, -selectionRadius * 2),
         'z'
       ))
 
@@ -63,7 +68,7 @@ require(
         var res = radian_angle * (360 / (2 * Math.PI))
         // -135 degrees is the difference between the 0 angle of the coordinate
         // system and the angle of the untransformed drawing.
-        return res + 135
+        return res
 
       }
 
