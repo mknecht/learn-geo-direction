@@ -11,65 +11,74 @@ require.config({
 require(
   ['jquery', 'd3'],
   function($, d3) {
+    function sp() {
+      return $.extend([], arguments).join(" ")
+    }
+
+    function p(x, y) {
+      return "" + x + " " + y
+    }
+
     $(function() {
 
       var $w = $(window)
 
-        var hfull = $w.height()
-        var hhalf = (hfull / 2) | 0;
-        var hquarter = (hhalf / 2) | 0;
+      var hfull = $w.height()
+      var hhalf = (hfull / 2) | 0;
+      var hquarter = (hhalf / 2) | 0;
 
-        var $interactDiv = $('<div id="interact"></div>').appendTo('body')
-        var interact = d3.select('div#interact').append('svg')
-                       .attr("id", "interact")
-                       .attr("height", "100%")
-                       .attr("width", "100%")
-        interact.append('circle')
-        .attr("class", "selector")
-        .attr("cx", hquarter) //$w.width()/2)
-        .attr("cy", hquarter)
-        .attr("r", hquarter)
-        interact.append('circle')
-        .attr("class", "selector")
-        .attr("cx", hhalf) //$w.width()/2)
-        .attr("cy", hhalf)
-        .attr("r", hquarter)
-        interact.append('circle')
-        .attr("class", "selector")
-        .attr("cx", hquarter) //$w.width()/2)
-        .attr("cy", hquarter * 3)
-        .attr("r", hquarter)
-      interact.append('rect')
-      .attr('class', 'testsvg')
-      .attr('x', 800)
-      .attr('y', 50)
-      .attr('width', 200)
-      .attr('height', 100)
-      interact.append('line')
-      .attr('class', 'testsvg')
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('x2', 100)
-      .attr('y2', 100)
+      var $interactDiv = $('<div id="interact"></div>').appendTo('body')
+      var interact = d3.select('div#interact').append('svg')
+                     .attr("id", "interact")
+                     .attr("height", "100%")
+                     .attr("width", "100%")
+                     .attr("viewBox", "0 0 " + ($w.width() | 0) + " " + hfull)
+                     .attr("preserveAspectRatio", "xMaxYMax meet")
 
-      $('body').append('<div class="testdiv"></div>')
-      // var $root = $('<svg></svg>')
-      //             .appendTo('body')
-      //             .attr('height', $w.height())
-      //             .attr('width', $w.width())
+      var centerx = hhalf;
+      var centery = hhalf;
+      var selectionRadius = hquarter;
+
+      var selector = interact.append('path')
+      .attr('class', 'selector')
+      .attr('d', sp(
+        'M', p(centerx, centery),
+        'm', p(0, -(selectionRadius + 5)),
+        'a', p(hquarter, hquarter), '0', '0,0', p(-(hquarter + 5), hquarter + 10),
+        'l', p(0, -(hquarter + 10)),
+        'z'
+      ))
+
+      function angleTo(x, y) {
+        var a = y - centery
+        var b = x - centerx;
+        var c = Math.sqrt(Math.pow(x - centerx, 2) + Math.pow(y - centery, 2))
+        var radian_angle = Math.asin(a / c)
+        if (b < 0) {
+          // When the angle is bigger than 90 degrees,
+          // we need to account for the fact that the above formulae
+          // are for an orthogonal triangle.
+          radian_angle = Math.PI - radian_angle;
+        }
+        var res = radian_angle * (360 / (2 * Math.PI))
+        // -135 degrees is the difference between the 0 angle of the coordinate
+        // system and the angle of the untransformed drawing.
+        return res + 135
+
+      }
+
+      $('body').mousemove(function(e) {
+        var angle = angleTo(e.clientX, e.clientY)
+        selector.attr(
+          "transform",
+          "rotate(" + angle + "," + centerx + "," + centery + ")")
+      })
+
       d3.xml("images/rose.svg", "image/svg+xml", function(xml) {
-        function scaleRose(currentHeight) {
-          return "scale(" + (($w.height()/ 2) / currentHeight) + ")"
-        }
-
-        function translateRose(svg) {
-          return "translate(" + $w.width() + " " + $w.height() + ")"
-        }
-
         var $rosediv = $('<div id="rosediv"></div').appendTo('body')
         $rosediv
         .height(hhalf)
-        .width("100%")
+        .width("50%")
         .addClass("rose")
         .css({
           top: hquarter,
@@ -77,10 +86,10 @@ require(
         })
         var $svg = $(xml.documentElement).appendTo($rosediv)
         var roseSvg = d3.select('#rosediv').select('svg')
-                  .attr("height", hhalf)
-                  .attr("width", hhalf)
-                  .attr("viewBox", "0 0 800 800")
-                  .attr("preserveAspectRatio", "xMidYMid meet")
+                      .attr("height", hhalf)
+                      .attr("width", hhalf)
+                      .attr("viewBox", "0 0 800 800")
+                      .attr("preserveAspectRatio", "xMidYMid meet")
       })
     })
   }

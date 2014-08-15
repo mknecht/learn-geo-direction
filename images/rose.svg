@@ -41,11 +41,11 @@
      pagecolor="#ffffff"
      id="base"
      inkscape:zoom="0.9425"
-     inkscape:cx="230.76923"
-     inkscape:cy="476.92308"
+     inkscape:cx="312.46684"
+     inkscape:cy="392.04244"
      inkscape:window-x="0"
      inkscape:window-y="25"
-     inkscape:current-layer="windrose"
+     inkscape:current-layer="g4440"
      showgrid="false"
      inkscape:window-maximized="1" />
   <defs
@@ -612,24 +612,5 @@
              id="tspan3238">315°</tspan></text>
       </g>
     </g>
-    <rect
-       y="391.37198"
-       x="345.70621"
-       height="18.232151"
-       width="107.35683"
-       id="rect3876"
-       style="opacity:0.63090126000000002;fill:#8385f7;fill-opacity:1;stroke:#8385f7;stroke-width:105.95900000000000318;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-linecap:butt" />
-    <text
-       sodipodi:linespacing="125%"
-       id="text3104"
-       y="413.61328"
-       x="320.16016"
-       style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#efef8d;fill-opacity:1;stroke:none;font-family:Times New Roman;-inkscape-font-specification:'Times New Roman, Bold'"
-       xml:space="preserve"><tspan
-         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Times New Roman;-inkscape-font-specification:'Times New Roman, Bold';fill:#efef8d;fill-opacity:1"
-         y="413.61328"
-         x="320.16016"
-         id="tspan3106"
-         sodipodi:role="line">London</tspan></text>
   </g>
 </svg>
