@@ -97,6 +97,19 @@ define(
                     .attr("preserveAspectRatio", "xMidYMid meet")
     }
 
+    function reactToMouseMovementAndClicks() {
+      var angle = [0]
+      $('body').mousemove(function(e) {
+        angle[0] = angleTo(e.clientX, e.clientY)
+        selector.attr(
+          "transform",
+          "rotate(" + angle + "," + centerx + "," + centery + ")")
+      })
+      $('body').click(function(e) {
+        var actual = geo.getAngle() - 90;  // 0 is north for geo-angles
+      })
+    }
+
     return {
       loadGame: function() {
         // load compass rose
@@ -109,13 +122,7 @@ define(
         updateDestination(geo.destination.label)
       },
       startGame: function() {
-        // react to mousemovement
-        $('body').mousemove(function(e) {
-          var angle = angleTo(e.clientX, e.clientY)
-          selector.attr(
-            "transform",
-            "rotate(" + angle + "," + centerx + "," + centery + ")")
-        })
+        reactToMouseMovementAndClicks()
         this.startNewRound()
       }
     }
