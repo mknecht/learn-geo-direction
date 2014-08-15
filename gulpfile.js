@@ -25,7 +25,7 @@ gulp.task('serve', ['test'], function() {
   })
 })
 
-gulp.task('livereload', ['test'], function() {
+gulp.task('reload', ['test'], function() {
   return gulp
          .src(sources)
          .pipe(connect.reload())
