@@ -23,6 +23,8 @@ TODOs
 - [ ] When displaying actual direction, indicate distance. (log. scale)
 - [ ] Display introduction when starting the game.
 - [ ] Introduce different difficulty levels: boring (180 degrees), easy (90), challenging (45), nerdy (10), insane(3)
+- [ ] Stop moving selector after selection (click).
+- [ ] Center the compass rose.
 
 Possibly:
 - [ ] Test for distance, too.
