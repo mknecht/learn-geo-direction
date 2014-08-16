@@ -1,8 +1,8 @@
 /*global jQuery */
 
 define(
-  ['jquery', 'd3', 'mtlatlon', 'geo'],
-  function($, d3, LatLon, geo) {
+  ['jquery', 'd3', 'mtlatlon', 'geo', 'roseutils'],
+  function($, d3, LatLon, geo, roseutils) {
     function getSelectors() {
       function sp() {
         return $.extend([], arguments).join(" ")
@@ -97,6 +97,24 @@ define(
                     .attr("preserveAspectRatio", "xMidYMid meet")
     }
 
+    function displayBanner(text) {
+      var $fog = $('div#fog')
+      var $banner = $fog.children('div#banner')
+      $banner.text(text)
+      $fog.show()
+      setTimeout(function() {
+        $fog.hide()
+      }, 3000)
+    }
+
+    function indicateSuccess(doAfter) {
+      displayBanner("Nailed it!", doAfter)
+    }
+
+    function indicateFailure(missedBy, doAfter) {
+      displayBanner("No! Missed by " + (missedBy | 0) + " degrees.", doAfter)
+    }
+
     function reactToMouseMovementAndClicks() {
       var angle = [0]
       $('body').mousemove(function(e) {
@@ -105,12 +123,20 @@ define(
           "transform",
           "rotate(" + angle + "," + centerx + "," + centery + ")")
       })
+
       $('body').click(function(e) {
-        var actual = geo.getAngle() - 90;  // 0 is north for geo-angles
+        var tolerance = 90
+        var actual = geo.getAngle() - 90  // 0 is north for geo-angles
+        var difference = roseutils.angleDifference(angle[0], actual)
+        if (difference < tolerance) {
+          indicateSuccess(api.startNewRound)
+        } else {
+          indicateFailure(difference - tolerance, api.startNewRound)
+        }
       })
     }
 
-    return {
+    var api = Object.create({
       loadGame: function() {
         // load compass rose
         d3.xml("images/rose.svg", "image/svg+xml", function(xml) {
@@ -125,6 +151,8 @@ define(
         reactToMouseMovementAndClicks()
         this.startNewRound()
       }
-    }
+    })
+
+    return api
   }
 )

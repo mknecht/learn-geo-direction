@@ -24,7 +24,7 @@ path.selector {
     fill: rgba(255, 184, 28, .3);
 }
 
-div#destination {
+div.destination {
     font-size: 2em;
     font-weight: bold;
     left: 0;
@@ -33,4 +33,31 @@ div#destination {
     top: 1em;
     width: 100%;
     z-index: 1000;
+}
+
+div.fog {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(131, 133, 247, .2);
+    z-index: 1500;
+}
+
+div.banner {
+    background-color: rgba(195, 196, 251, .8);
+    border-color: rgba(131, 133, 247, 1);
+    border-style: solid none;
+    border-width: .2em;
+    color: rgba(131, 133, 247, 1);
+    font-weight: bold;
+    font-size: 2em;
+    left: 0;
+    padding: 1em;
+    position: absolute;
+    text-align: center;
+    top: 40%;
+    width: 100%;
 }

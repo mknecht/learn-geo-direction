@@ -1,10 +1,6 @@
 define(
-  ['mtlatlon'],
-  function(LatLon) {
-    function choose(items) {
-      return items[(Math.random() * items.length) | 0]
-    }
-
+  ['mtlatlon', 'roseutils'],
+  function(LatLon, roseutils) {
     var origin = {label: "London", loc: new LatLon(51.507222, -0.1275)}
 
     var destinations = [
@@ -18,7 +14,7 @@ define(
 
     return {
       chooseNewDestination: function() {
-        this.destination = choose(destinations)
+        this.destination = roseutils.choose(destinations)
         return this.destination
       },
       getAngle: function() {

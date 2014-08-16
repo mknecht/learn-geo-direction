@@ -10,7 +10,8 @@ require.config({
     geo: 'js/geo',
     jquery: 'bower_components/jquery/dist/jquery.min',
     mtlatlon: 'bower_components/MovableType-LatLon/mtlatlon',
-    rose: 'js/rose'
+    rose: 'js/rose',
+    roseutils: 'js/roseutils'
   }
 });
 
