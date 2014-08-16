@@ -64,6 +64,7 @@ define(
                             .attr('cx', centerx)
                             .attr('cy', centery)
                             .attr('r', destinationRadius)
+                            .classed("destination", true)
 
     function angleTo(x, y) {
       var a = y - centery
@@ -128,13 +129,15 @@ define(
     }
 
     function indicateDestination() {
-      var destinationDistance = selectionRadius * 2
+      var destinationDistance = selectionRadius * 1.5
+      var triangle = roseutils.triangleByAngleAndRadius(
+        getTransformedGeoAngle(), destinationDistance)
       destinationCircle
-      .attr("cx", centerx + destinationDistance)
-      .attr("cy", centery + destinationDistance)
+      .attr("cx", centerx + triangle.adjacent)
+      .attr("cy", centery + triangle.opposite)
       .style('display', 'inline')
       return function() {
-        // destinationCircle.style('display', 'none')
+        destinationCircle.style('display', 'none')
       }
     }
 

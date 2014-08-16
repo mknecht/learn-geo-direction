@@ -18,7 +18,7 @@ define(
         return this.destination
       },
       getAngle: function() {
-        return origin.loc.bearingTo(this.destination.loc)
+        return origin.loc.rhumbBearingTo(this.destination.loc)
       }
     }
   }

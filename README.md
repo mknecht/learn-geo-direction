@@ -19,7 +19,7 @@ TODOs
 -----
 
 - [X] Indicate success or failure
-- [ ] Display actual direction after click.
+- [X] Display actual direction after click.
 - [ ] When displaying actual direction, indicate distance. (log. scale)
 - [ ] Display introduction when starting the game.
 - [ ] Introduce different difficulty levels: boring (180 degrees), easy (90), challenging (45), nerdy (10), insane(3)
