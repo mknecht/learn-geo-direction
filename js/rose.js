@@ -12,7 +12,6 @@ define(
         return "" + x + " " + y
       }
 
-      var selectionRadius = hquarter + 5;
       // A distance that will get the end of the polygon out of sight even
       // in the diagonals, i.e. more than sqrt(a² + b²) or 1.41…
       var outofsight = Math.max($w.width(), $w.height()) * 2
@@ -44,8 +43,10 @@ define(
     var hhalf = (hfull / 2) | 0;
     var hquarter = (hhalf / 2) | 0;
 
+    var selectionRadius = hquarter + 5;
+
     var $interactDiv = $('<div id="interact"></div>').appendTo('body')
-    var interact = d3.select('div#interact').append('svg')
+    var interactSvg = d3.select('div#interact').append('svg')
                    .attr("id", "interact")
                    .attr("height", "100%")
                    .attr("width", "100%")
@@ -55,7 +56,14 @@ define(
     var centerx = hhalf;
     var centery = hhalf;
 
-    var selector = getSelectors().easy.draw(interact, centerx, centery)
+    var selector = getSelectors().easy.draw(interactSvg, centerx, centery)
+
+    var destinationRadius = 20
+    var destinationCircle = interactSvg
+                            .append('circle')
+                            .attr('cx', centerx)
+                            .attr('cy', centery)
+                            .attr('r', destinationRadius)
 
     function angleTo(x, y) {
       var a = y - centery
@@ -102,17 +110,49 @@ define(
       var $banner = $fog.children('div#banner')
       $banner.text(text)
       $fog.show()
-      setTimeout(function() {
+      return function() {
         $fog.hide()
+      }
+    }
+
+    function getTransformedGeoAngle() {
+      return geo.getAngle() - 90  // 0 is north for geo-angles
+    }
+
+    function indicateSuccess() {
+      return displayBanner("Nailed it!")
+    }
+
+    function indicateFailure(missedBy) {
+      return displayBanner("No! Missed by " + (missedBy | 0) + " degrees.")
+    }
+
+    function indicateDestination() {
+      var destinationDistance = selectionRadius * 2
+      destinationCircle
+      .attr("cx", centerx + destinationDistance)
+      .attr("cy", centery + destinationDistance)
+      .style('display', 'inline')
+      return function() {
+        // destinationCircle.style('display', 'none')
+      }
+    }
+
+    function giveFeedbackAndStartNewRound(angle) {
+      var tolerance = 90
+      var actual = getTransformedGeoAngle()
+      var difference = roseutils.angleDifference(angle, actual)
+      var cleanupSuccessFeedback = (
+        (difference < tolerance) ?
+          indicateSuccess() :
+          indicateFailure(difference - tolerance)
+      )
+      var cleanupDestinationFeedback = indicateDestination()
+      setTimeout(function() {
+        cleanupSuccessFeedback()
+        cleanupDestinationFeedback()
+        api.startNewRound()
       }, 3000)
-    }
-
-    function indicateSuccess(doAfter) {
-      displayBanner("Nailed it!", doAfter)
-    }
-
-    function indicateFailure(missedBy, doAfter) {
-      displayBanner("No! Missed by " + (missedBy | 0) + " degrees.", doAfter)
     }
 
     function reactToMouseMovementAndClicks() {
@@ -125,14 +165,7 @@ define(
       })
 
       $('body').click(function(e) {
-        var tolerance = 90
-        var actual = geo.getAngle() - 90  // 0 is north for geo-angles
-        var difference = roseutils.angleDifference(angle[0], actual)
-        if (difference < tolerance) {
-          indicateSuccess(api.startNewRound)
-        } else {
-          indicateFailure(difference - tolerance, api.startNewRound)
-        }
+        giveFeedbackAndStartNewRound(angle[0])
       })
     }
 

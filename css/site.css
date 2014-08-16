@@ -61,3 +61,10 @@ div.banner {
     top: 40%;
     width: 100%;
 }
+
+circle.destination {
+    stroke: rgba(255, 184, 28, 1);
+    stroke-width: 5px;
+    fill: rgba(255, 184, 28, .3);
+    display: none;
+}
