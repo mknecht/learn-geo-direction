@@ -20,7 +20,6 @@ TODOs
 
 - [X] Indicate success or failure
 - [X] Display actual direction after click.
-- [ ] When displaying actual direction, indicate distance. (log. scale)
 - [ ] Display introduction when starting the game.
 - [ ] Introduce different difficulty levels: boring (180 degrees), easy (90), challenging (45), nerdy (10), insane(3)
 - [ ] Stop moving selector after selection (click).
@@ -30,3 +29,4 @@ Possibly:
 - [ ] Test for distance, too.
 - [ ] Display random award texts.
 - [ ] Allow switching to ridge-line bearing.
+- [ ] When displaying actual direction, indicate distance. (log. scale)
