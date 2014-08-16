@@ -1,9 +1,13 @@
-/*global jQuery */
+/*global jQuery, setTimeout */
 
 define(
   ['jquery', 'd3', 'mtlatlon', 'geo', 'roseutils'],
   function($, d3, LatLon, geo, roseutils) {
     function getSelectors() {
+      // A distance that will get the end of the polygon out of sight even
+      // in the diagonals, i.e. more than sqrt(a² + b²) or 1.41…
+      var outofsight = Math.max($w.width(), $w.height()) * 2
+
       function sp() {
         return $.extend([], arguments).join(" ")
       }
@@ -12,27 +16,63 @@ define(
         return "" + x + " " + y
       }
 
-      // A distance that will get the end of the polygon out of sight even
-      // in the diagonals, i.e. more than sqrt(a² + b²) or 1.41…
-      var outofsight = Math.max($w.width(), $w.height()) * 2
+      function drawNarrowSelector(svg, angle) {
+            var innerLeftTriangle = roseutils.triangleByAngleAndRadius(90 + angle, selectionRadius)
+            var outerLeftTriangle = roseutils.triangleByAngleAndRadius(90 + angle, outofsight)
+            return svg.append('path')
+                   .attr('class', 'selector')
+                   .attr('d', sp(
+                     'M', p(centerx + innerLeftTriangle.adjacent, centery - innerLeftTriangle.opposite),
+                     'L', p(centerx + outerLeftTriangle.adjacent, centery - outerLeftTriangle.opposite),
+                     'L', p(centerx - outerLeftTriangle.adjacent, centery - outerLeftTriangle.opposite),
+                     'L', p(centerx - innerLeftTriangle.adjacent, centery - innerLeftTriangle.opposite),
+                     'A', p(hquarter, hquarter), '0', '0,0', p(centerx + innerLeftTriangle.adjacent, centery - innerLeftTriangle.opposite),
+                     'z'
+                   ))
+      }
 
       return {
-        "easy": {
-          draw: function(interact) {
-            return interact.append('path')
+        boring: {
+          draw: function(svg) {
+            return svg.append('path')
                    .attr('class', 'selector')
                    .attr('d', sp(
                      'M', p(centerx, centery),
-                     'm', p(0, -selectionRadius),
-                     'l', p(0, -outofsight),
-                     'l', p(outofsight, 0),
-                     'l', p(0, 2 * outofsight + 2 * selectionRadius),
+                     'm', p(-selectionRadius, 0),
                      'l', p(-outofsight, 0),
                      'l', p(0, -outofsight),
-                     'a', p(hquarter, hquarter), '0', '0,0', p(0, -selectionRadius * 2),
+                     'l', p(2 * outofsight + 2 * selectionRadius, 0),
+                     'l', p(0, outofsight),
+                     'l', p(-outofsight, 0),
+                     'a', p(hquarter, hquarter), '0', '0,0', p(-selectionRadius * 2, 0),
                      'z'
                    ))
-          }
+          },
+          tolerance: 90
+        },
+        challenging: {
+          draw: function(svg) {
+            return drawNarrowSelector(svg, this.tolerance)
+          },
+          tolerance: 45.0 / 2
+        },
+        easy: {
+          draw: function(svg) {
+            return drawNarrowSelector(svg, this.tolerance)
+          },
+          tolerance: 45.0
+        },
+        insane: {
+          draw: function(svg) {
+            return drawNarrowSelector(svg, this.tolerance)
+          },
+          tolerance: 3
+        },
+        nerdy: {
+          draw: function(svg) {
+            return drawNarrowSelector(svg, this.tolerance)
+          },
+          tolerance: 45.0 / 4
         }
       }
     }
@@ -56,8 +96,6 @@ define(
     var centerx = hhalf;
     var centery = hhalf;
 
-    var selector = getSelectors().easy.draw(interactSvg, centerx, centery)
-
     var destinationRadius = 20
     var destinationCircle = interactSvg
                             .append('circle')
@@ -77,11 +115,7 @@ define(
         // are for an orthogonal triangle.
         radian_angle = Math.PI - radian_angle;
       }
-      var res = radian_angle * (360 / (2 * Math.PI))
-      // -135 degrees is the difference between the 0 angle of the coordinate
-      // system and the angle of the untransformed drawing.
-      return res
-
+      return radian_angle * 180 / Math.PI
     }
 
     function updateDestination(label) {
@@ -141,34 +175,35 @@ define(
       }
     }
 
-    function giveFeedbackAndStartNewRound(angle) {
-      var tolerance = 90
+    function giveFeedbackAndStartNewRound(angle, selector) {
       var actual = getTransformedGeoAngle()
       var difference = roseutils.angleDifference(angle, actual)
       var cleanupSuccessFeedback = (
-        (difference < tolerance) ?
+        (difference < selector.tolerance) ?
           indicateSuccess() :
-          indicateFailure(difference - tolerance)
+          indicateFailure(difference - selector.tolerance)
       )
       var cleanupDestinationFeedback = indicateDestination()
       setTimeout(function() {
         cleanupSuccessFeedback()
         cleanupDestinationFeedback()
+        selector.svg.remove()
+        selector.svg = undefined
         api.startNewRound()
       }, 3000)
     }
 
-    function reactToMouseMovementAndClicks() {
+    function reactToMouseMovementAndClicks(selector) {
       var angle = [0]
       $('body').mousemove(function(e) {
         angle[0] = angleTo(e.clientX, e.clientY)
-        selector.attr(
+        selector.svg.attr(
           "transform",
-          "rotate(" + angle + "," + centerx + "," + centery + ")")
+          "rotate(" + (angle[0] + 90) + "," + centerx + "," + centery + ")")
       })
 
       $('body').click(function(e) {
-        giveFeedbackAndStartNewRound(angle[0])
+        giveFeedbackAndStartNewRound(angle[0], selector)
       })
     }
 
@@ -180,11 +215,14 @@ define(
         })
       },
       startNewRound: function() {
+        this.selector.svg = this.selector.draw(
+          interactSvg, centerx, centery)
         geo.chooseNewDestination()
         updateDestination(geo.destination.label)
       },
       startGame: function() {
-        reactToMouseMovementAndClicks()
+        this.selector = getSelectors().easy
+        reactToMouseMovementAndClicks(this.selector)
         this.startNewRound()
       }
     })
