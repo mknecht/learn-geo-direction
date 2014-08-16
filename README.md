@@ -18,6 +18,7 @@ The **compass rose** is an adaption of the elegant one [from Wikipedia](http://e
 TODOs
 -----
 
+- [ ] Indicate success or failure
 - [ ] Display actual direction after click.
 - [ ] When displaying actual direction, indicate distance. (log. scale)
 - [ ] Display introduction when starting the game.
