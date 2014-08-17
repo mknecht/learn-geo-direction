@@ -244,7 +244,6 @@ define(
       },
       setSelector: function(id) {
         var selected = getSelectors()[id]
-        selected.unbind = reactToMouseMovementAndClicks(selected)
         $('div#difficulty').find('button.active').removeClass('active')
         $('div#difficulty').find('button[value="' + id + '"]').addClass("active")
         this.selector = selected
