@@ -5,6 +5,8 @@ Assuming you're in London, in which direction would New York be?
 
 Here's a [demo how you could learn](http://mknecht.github.io/learn-geo-direction/) such geographic directions.
 
+For another demo, see my [city-locating project](https://github.com/mknecht/learn-geo). If you want to learn countries and rivers and lakes of the Earth (or languages or whatever), you could do worse than head over to [Memrise](http://memrise.com).
+
 License & Credits
 -----------------
 
