@@ -190,6 +190,7 @@ define(
     }
 
     function giveFeedbackAndStartNewRound(angle, selector) {
+      selector.unbind()
       var actual = getTransformedGeoAngle()
       var difference = roseutils.angleDifference(angle, actual)
       var cleanupSuccessFeedback = (
