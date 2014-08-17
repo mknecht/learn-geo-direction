@@ -11,10 +11,13 @@ define(
 
       return {
         greet :function() {
+          var top = $('#banner').css('top')
+          $('#banner').css('top', "10%")
           $('#banner').append(roseutils.choose(greetings) + '<br>In <span class="origin">London</span>.<br>A tourist approaches.')
           $('#fog').show()
           return function() {
             $('#fog').hide()
+            $('#banner').css('top', top)
           }
         },
         updateQuestion: function(label) {
