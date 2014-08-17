@@ -104,6 +104,16 @@ define(
                             .attr('r', destinationRadius)
                             .classed("destination", true)
 
+    $.each(getSelectors(), function(id) {
+      var innerDiv = $('<div></div>').appendTo('div#difficulty')
+      var button = $('<button value="' + id + '">' + id + '</button>').appendTo(innerDiv)
+      button.click(function() {
+        api.cleanupCurrentSelector()
+        api.setSelector(id)
+        api.useCurrentSelector()
+      })
+    })
+
     function angleTo(x, y) {
       var a = y - centery
       var b = x - centerx;
@@ -187,24 +197,33 @@ define(
       setTimeout(function() {
         cleanupSuccessFeedback()
         cleanupDestinationFeedback()
-        selector.svg.remove()
-        selector.svg = undefined
         api.startNewRound()
       }, 3000)
     }
 
     function reactToMouseMovementAndClicks(selector) {
       var angle = [0]
-      $('body').mousemove(function(e) {
-        angle[0] = angleTo(e.clientX, e.clientY)
-        selector.svg.attr(
-          "transform",
-          "rotate(" + (angle[0] + 90) + "," + centerx + "," + centery + ")")
-      })
+      function onMouseMove (e) {
+        var selectorSvg = selector.svg
+        if (selectorSvg !== undefined) {
+          angle[0] = angleTo(e.clientX, e.clientY)
+          selectorSvg.attr(
+            "transform",
+            "rotate(" + (angle[0] + 90) + "," + centerx + "," + centery + ")")
+        }
+      }
 
-      $('body').click(function(e) {
+      function onClick(e) {
         giveFeedbackAndStartNewRound(angle[0], selector)
-      })
+      }
+
+      $('body').on('mousemove', onMouseMove)
+      $('body').on('click', onClick)
+
+      return function() {
+        $('body').off('mousemove', onMouseMove)
+        $('body').off('click', onClick)
+      }
     }
 
     var api = Object.create({
@@ -214,15 +233,33 @@ define(
           insertRoseSvg(xml.documentElement)
         })
       },
+      cleanupCurrentSelector: function() {
+        this.selector.unbind()
+        this.selector.svg.remove()
+        this.selector.svg = undefined
+      },
+      setSelector: function(id) {
+        var selected = getSelectors()[id]
+        selected.unbind = reactToMouseMovementAndClicks(selected)
+        $('div#difficulty').find('button.active').removeClass('active')
+        $('div#difficulty').find('button#' + id).addClass("active")
+        this.selector = selected
+      },
+      useCurrentSelector: function() {
+        var selected = this.selector
+        selected.unbind = reactToMouseMovementAndClicks(selected)
+        selected.svg = selected.draw(interactSvg, centerx, centery)
+      },
       startNewRound: function() {
-        this.selector.svg = this.selector.draw(
-          interactSvg, centerx, centery)
+        if (this.selector.svg) {
+          api.cleanupCurrentSelector()
+        }
+        this.useCurrentSelector()
         geo.chooseNewDestination()
         updateDestination(geo.destination.label)
       },
       startGame: function() {
-        this.selector = getSelectors().easy
-        reactToMouseMovementAndClicks(this.selector)
+        this.setSelector('easy')
         this.startNewRound()
       }
     })

@@ -68,3 +68,39 @@ circle.destination {
     fill: rgba(255, 184, 28, .3);
     display: none;
 }
+
+div.difficulty {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    text-align: center;
+    z-index: 1500;
+}
+
+div.difficulty h2 {
+    background-color: rgba(161, 163, 247, 1);
+    border-color: rgba(161, 163, 247, 1);
+    border-style: solid;
+    border-top-left-radius: 1.2em;
+    border-top-right-radius: 1.2em;
+    border-width: 1px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+    padding: .5em;
+}
+
+div.difficulty button {
+    background-color: rgba(213, 213, 251, 1);
+    border-color: rgba(161, 163, 247, 1);
+    border-style: solid;
+    border-width: 1px;
+    font-size: 1.2em;
+    padding: .5em;
+    width: 100%;
+}
+
+div.difficulty button.active {
+    font-weight: bold;
+}
