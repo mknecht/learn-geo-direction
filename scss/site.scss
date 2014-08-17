@@ -6,6 +6,7 @@ $menucolor_bg: rgba(195, 196, 251, .9);
 $zindex_question: 1000;
 $zindex_difficulty: $zindex_question + 1;
 $zindex_fog: $zindex_difficulty + 1;
+$zindex_footer: $zindex_fog + 1;
 
 body {
     overflow: hidden;
@@ -122,5 +123,25 @@ div.difficulty {
 
     button.active {
 	font-weight: bold;
+    }
+}
+
+div.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    z-index: $zindex_footer;
+
+    .text {
+	color: black;
+	font-size: .9em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	border-style: solid solid none solid;
+	border-color: $menucolor_fg;
+	border-width: 1px;
+	padding: .5em;
     }
 }

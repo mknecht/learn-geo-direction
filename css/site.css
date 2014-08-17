@@ -90,3 +90,20 @@ div.difficulty {
     border-bottom-right-radius: 1.2em; }
   div.difficulty button.active {
     font-weight: bold; }
+
+div.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  z-index: 1003; }
+  div.footer .text {
+    color: black;
+    font-size: 0.9em;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    border-style: solid solid none solid;
+    border-color: #6567d9;
+    border-width: 1px;
+    padding: 0.5em; }
