@@ -80,13 +80,13 @@ div.fog {
 	top: 40%;
 	width: 100%;
 
-	div.banner .origin {
+	.origin {
 	    color: black;
 	}
     }
 }
 
-div.difficulty {
+div.menu {
     display: none;
     position: absolute;
     top: 20%;
@@ -125,6 +125,11 @@ div.difficulty {
 	font-weight: bold;
     }
 }
+
+div.difficulty,div.course {
+    margin: .5em 0em;
+}
+
 
 div.footer {
     position: absolute;

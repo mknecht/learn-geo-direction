@@ -158,9 +158,6 @@ define(['jquery', 'roseutils'], function($, roseutils) {
         $('div#difficulty').find('button[value="' + id + '"]').addClass("active")
         this.selector = selected
       },
-      showMenu: function() {
-        $menuDiv.show()
-      },
       startCurrentSelector: function(onSelect) {
         var selected = this.selector
         selected.unbind = reactToMouseMovementAndClicks(elements, centerx, centery, onSelect, selected)

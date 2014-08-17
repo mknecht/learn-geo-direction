@@ -32,10 +32,6 @@ define(
       }
     }
 
-    function getTransformedGeoAngle() {
-      return geo.getAngle() - 90  // 0 is north for geo-angles
-    }
-
     function indicateSuccess() {
       return displayBanner(roseutils.choose(successMessages))
     }
@@ -44,10 +40,10 @@ define(
       return displayBanner(roseutils.choose(failureMessages)(missedBy))
     }
 
-    function indicateDestination(destinationCircle, centerx, centery) {
+    function indicateDestination(destinationCircle, centerx, centery, actualAngle) {
       var destinationDistance = hquarter * 1.5
       var triangle = roseutils.triangleByAngleAndRadius(
-        getTransformedGeoAngle(), destinationDistance)
+        actualAngle, destinationDistance)
       destinationCircle
       .attr("cx", centerx + triangle.adjacent)
       .attr("cy", centery + triangle.opposite)
@@ -65,16 +61,15 @@ define(
                               .attr('r', destinationRadius)
                               .classed("destination", true)
       return {
-        giveFeedback: function(angle, tolerance) {
-          var actual = getTransformedGeoAngle()
-          var difference = roseutils.angleDifference(angle, actual)
+        giveFeedback: function(actualAngle, chosenAngle, tolerance) {
+          var difference = roseutils.angleDifference(chosenAngle, actualAngle)
           var cleanupSuccessFeedback = (
-            (difference < tolerance) ?
+            (difference <= tolerance) ?
               indicateSuccess() :
               indicateFailure(difference - tolerance)
           )
           var cleanupDestinationFeedback = indicateDestination(
-            destinationCircle, centerx, centery)
+            destinationCircle, centerx, centery, actualAngle)
           return function() {
             cleanupSuccessFeedback()
             cleanupDestinationFeedback()

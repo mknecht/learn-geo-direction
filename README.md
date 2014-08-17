@@ -28,6 +28,6 @@ TODOs
 
 Possibly:
 - [ ] Test for distance, too.
-- [ ] Display random award texts.
-- [ ] Allow switching to ridge-line bearing.
+- [X] Display random award texts.
+- [X] Allow switching to rhumb-line bearing.
 - [ ] When displaying actual direction, indicate distance. (log. scale)

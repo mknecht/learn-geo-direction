@@ -1,6 +1,6 @@
 define(
-  ['mtlatlon', 'roseutils'],
-  function(LatLon, roseutils) {
+  ['jquery', 'mtlatlon', 'roseutils'],
+  function($, LatLon, roseutils) {
     var origin = {label: "London", loc: new LatLon(51.507222, -0.1275)}
 
     var destinations = [
@@ -12,14 +12,37 @@ define(
       {label: "Warsaw", loc: new LatLon( 52.233333, 21.016667)}
     ]
 
-    return {
-      chooseNewDestination: function() {
-        this.destination = roseutils.choose(destinations)
-        return this.destination
-      },
-      getAngle: function() {
-        return origin.loc.rhumbBearingTo(this.destination.loc)
+      var courseMethods = {
+        rhumb: function(origin, destination) {
+          return origin.loc.rhumbBearingTo(this.destination.loc)
+        },
+        true_: function(origin, destination) {
+          return origin.loc.bearingTo(this.destination.loc)
+        }
       }
+
+    return function(methodname) {
+      var api = {
+        chooseNewDestination: function() {
+          this.destination = roseutils.choose(destinations)
+          return this.destination
+        },
+        getAngle: function() {
+          return this.courseMethod(origin, this.destination)
+        },
+        setCourseMethod: function(id) {
+          $('div#course').find('button.active').removeClass('active')
+          $('div#course').find('button[value="' + id + '"]').addClass("active")
+          this.courseMethod = courseMethods[id]
+        }
+      }
+
+      $('div#course').find('button').click(function() {
+        api.setCourseMethod($(this).attr('value'))
+      })
+
+      api.setCourseMethod(methodname)
+      return api
     }
   }
 )

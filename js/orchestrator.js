@@ -14,15 +14,20 @@ define(
     var centerx = $w.width()/2;
     var centery = hhalf;
 
+    var geoApi = geo('rhumb')
     var roseApi = rose(centerx, centery)
     var selectorApi = selectors(
-      interactSvg, [$interactDiv, roseApi.getRoseDiv()], centerx, centery)
+      interactSvg, [$interactDiv, roseApi.getRoseDiv()], centerx, centery, geoApi)
     var evaluationApi = evaluation(interactSvg, centerx, centery)
     var challengerApi = challenger()
 
-    function giveFeedbackAndStartNewRound(angle, selector) {
+    function getTransformedGeoAngle() {
+      return geoApi.getAngle() - 90  // 0 is north for geo-angles
+    }
+
+    function giveFeedbackAndStartNewRound(chosenAngle, selector) {
       selector.unbind()
-      var cleanupFeedback = evaluationApi.giveFeedback(angle, selector.tolerance)
+      var cleanupFeedback = evaluationApi.giveFeedback(getTransformedGeoAngle(), chosenAngle, selector.tolerance)
       setTimeout(function() {
         cleanupFeedback()
         api.startNewRound()
@@ -42,7 +47,7 @@ define(
           var cleanupGreeting = challengerApi.greet()
           setTimeout(function() {
             cleanupGreeting()
-            selectorApi.showMenu()
+            $('#menu').show()
             selectorApi.setSelector('easy')
             that.startNewRound()
           }, 4000)
@@ -50,9 +55,9 @@ define(
       },
       startNewRound: function() {
         selectorApi.cleanupCurrentSelector()
+        geoApi.chooseNewDestination()
         selectorApi.startCurrentSelector(giveFeedbackAndStartNewRound)
-        geo.chooseNewDestination()
-        challengerApi.updateQuestion(geo.destination.label)
+        challengerApi.updateQuestion(geoApi.destination.label)
       }
     }
 

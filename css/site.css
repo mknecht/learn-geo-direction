@@ -57,17 +57,17 @@ div.fog {
     text-align: center;
     top: 40%;
     width: 100%; }
-    div.fog div.banner div.banner .origin {
+    div.fog div.banner .origin {
       color: black; }
 
-div.difficulty {
+div.menu {
   display: none;
   position: absolute;
   top: 20%;
   left: 0;
   text-align: center;
   z-index: 1001; }
-  div.difficulty h2 {
+  div.menu h2 {
     background-color: #6567d9;
     border-color: #6567d9;
     border-style: solid;
@@ -78,7 +78,7 @@ div.difficulty {
     font-weight: bold;
     margin: 0;
     padding: 0.5em; }
-  div.difficulty button {
+  div.menu button {
     background-color: rgba(195, 196, 251, 0.9);
     border-color: #6567d9;
     border-style: solid;
@@ -86,10 +86,13 @@ div.difficulty {
     font-size: 1.2em;
     padding: 0.5em;
     width: 100%; }
-  div.difficulty div:last-of-type > button {
+  div.menu div:last-of-type > button {
     border-bottom-right-radius: 1.2em; }
-  div.difficulty button.active {
+  div.menu button.active {
     font-weight: bold; }
+
+div.difficulty, div.course {
+  margin: 0.5em 0em; }
 
 div.footer {
   position: absolute;
