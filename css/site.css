@@ -81,7 +81,6 @@ div.difficulty h2 {
     background-color: rgba(161, 163, 247, 1);
     border-color: rgba(161, 163, 247, 1);
     border-style: solid;
-    border-top-left-radius: 1.2em;
     border-top-right-radius: 1.2em;
     border-width: 1px;
     color: white;
@@ -99,6 +98,10 @@ div.difficulty button {
     font-size: 1.2em;
     padding: .5em;
     width: 100%;
+}
+
+div.difficulty div:last-of-type > button {
+    border-bottom-right-radius: 1.2em;
 }
 
 div.difficulty button.active {
