@@ -24,7 +24,7 @@ TODOs
 - [X] Introduce different difficulty levels: boring (180 degrees), easy (90), challenging (45), nerdy (10), insane(3)
 - [X] Stop moving selector after selection (click).
 - [X] Center the compass rose.
-- [ ] Use SCSS to centralize colors, and to make z-indizes explicit.
+- [X] Use SCSS to centralize colors, and to make z-indizes explicit.
 
 Possibly:
 - [ ] Test for distance, too.

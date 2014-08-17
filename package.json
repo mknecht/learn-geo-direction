@@ -25,6 +25,7 @@
     "requirejs": "~2.1.14",
     "should": "~4.0.4",
     "gulp-grep-stream": "0.0.2",
-    "gulp-plumber": "~0.6.4"
+    "gulp-plumber": "~0.6.4",
+    "gulp-sass": "~0.7.3"
   }
 }

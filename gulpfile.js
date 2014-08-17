@@ -5,9 +5,10 @@ var gutil = require('gulp-util')
 var jshint = require('gulp-jshint')
 var mocha = require('gulp-mocha')
 var plumber = require('gulp-plumber')
+var sass = require('gulp-sass')
 var watch = require('gulp-watch')
 
-var sources = ['index.html', 'bower_components/**/*', 'css/*.css', 'js/*.js']
+var sources = ['index.html', 'bower_components/**/*', 'scss/*.scss', 'css/*.css', 'js/*.js']
 var testsources = ['js/*.js', 'tests/*.js']
 
 
@@ -30,12 +31,12 @@ gulp.task('jshint', function() {
   }))
 })
 
-gulp.task('test', ['jshint'], function() {
+gulp.task('test', ['build', 'jshint'], function() {
   gulp.src("tests/*Spec.js")
   .pipe(createMocha())
 })
 
-gulp.task('serve', ['test'], function() {
+gulp.task('serve', ['build', 'test'], function() {
   return connect.server({
     root: ['./'],
     livereload: true
@@ -48,8 +49,16 @@ gulp.task('reload', ['test'], function() {
          .pipe(connect.reload())
 })
 
+gulp.task('sass', function() {
+  gulp.src("./scss/*.scss")
+  .pipe(sass())
+  .pipe(gulp.dest("./css/"))
+})
+
+gulp.task('build', ['sass'])
+
 gulp.task('watch', function() {
-  return gulp.watch(sources, ['reload'])
+  return gulp.watch(sources, ['build', 'reload'])
 })
 
 gulp.task('watchtest', function() {

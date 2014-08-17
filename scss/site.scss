@@ -1,0 +1,126 @@
+$graphcolor_fg: rgba(255, 184, 28, 1);
+$graphcolor_bg: rgba(255, 184, 28, .3);
+$menucolor_fg: rgba(101, 103, 217, 1);
+$menucolor_bg: rgba(195, 196, 251, .9);
+
+$zindex_question: 1000;
+$zindex_difficulty: $zindex_question + 1;
+$zindex_fog: $zindex_difficulty + 1;
+
+body {
+    overflow: hidden;
+}
+
+div.rose {
+    position: absolute;
+    display: table;
+    margin: 0 auto;
+}
+
+div#interact {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    circle.destination {
+	stroke: $graphcolor_fg;
+	stroke-width: 5px;
+	fill: $graphcolor_bg;
+	display: none;
+    }
+
+    circle.selector {
+	stroke: black;
+	fill: transparent;
+    }
+
+    path.selector {
+	stroke: $graphcolor_fg;
+	fill: $graphcolor_bg;
+    }
+
+}
+
+div.question {
+    color: $menucolor_fg;
+    font-size: 2em;
+    font-weight: bold;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 1em;
+    width: 100%;
+    z-index: $zindex_question;
+}
+
+div.fog {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: $zindex_fog;
+
+    div.banner {
+	background-color: $menucolor_bg;
+	border-color: $menucolor_fg;
+	border-style: solid none;
+	border-width: .2em;
+	color: $menucolor_fg;
+	font-weight: bold;
+	font-size: 2em;
+	left: 0;
+	padding: 1em;
+	position: absolute;
+	text-align: center;
+	top: 40%;
+	width: 100%;
+
+	div.banner .origin {
+	    color: black;
+	}
+    }
+}
+
+div.difficulty {
+    display: none;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    text-align: center;
+    z-index: $zindex_difficulty;
+
+    h2 {
+	background-color: $menucolor_fg;
+	border-color: $menucolor_fg;
+	border-style: solid;
+	border-top-right-radius: 1.2em;
+	border-width: 1px;
+	color: white;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0;
+	padding: .5em;
+    }
+
+    button {
+	background-color: $menucolor_bg;
+	border-color: $menucolor_fg;
+	border-style: solid;
+	border-width: 1px;
+	font-size: 1.2em;
+	padding: .5em;
+	width: 100%;
+    }
+
+    div:last-of-type > button {
+	border-bottom-right-radius: 1.2em;
+    }
+
+    button.active {
+	font-weight: bold;
+    }
+}

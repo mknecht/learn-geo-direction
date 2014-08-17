@@ -18,7 +18,7 @@ define(
 
     var failureMessages = [
         function(missedBy) { return "Off by " + (missedBy | 0) + "°!" },
-        function(missedBy) { return "About " + (missedBy | 0) + "° are saying you are wrong!" },
+        function(missedBy) { return "All " + (missedBy | 0) + "° are saying you are wrong!" },
         function(missedBy) { return "So close! (" + (missedBy | 0) + "°)" }
     ]
 
