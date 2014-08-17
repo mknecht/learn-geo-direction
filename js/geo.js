@@ -6,7 +6,11 @@ define(
     var destinations = [
       {label: "Cape Town", loc: new LatLon(-33.925278, 18.423889)},
       {label: "Castletown", loc: new LatLon(54.074167, -4.653889)},
+      {label: "Disneyland", loc: new LatLon(33.809, -117.919)},
+      {label: "Fergburger in Queenstown, NZ", loc: new LatLon(-45.031111, 168.6625)},
+      {label: "Fukushima", loc: new LatLon(37.316389, 141.025556)},
       {label: "Hastings", loc: new LatLon(50.856302, 0.572875)},
+      {label: "Mumbai", loc: new LatLon(18.975, 72.825833)},
       {label: "New York", loc: new LatLon( 43, -75)},
       {label: "Paris", loc: new LatLon(48.8567, 2.3508)},
       {label: "Warsaw", loc: new LatLon( 52.233333, 21.016667)}
