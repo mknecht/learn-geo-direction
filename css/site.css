@@ -26,7 +26,8 @@ path.selector {
     fill: rgba(255, 184, 28, .3);
 }
 
-div.destination {
+div.question {
+    color: rgba(101, 103, 217, 1);
     font-size: 2em;
     font-weight: bold;
     left: 0;
@@ -48,11 +49,11 @@ div.fog {
 }
 
 div.banner {
-    background-color: rgba(195, 196, 251, .8);
+    background-color: rgba(195, 196, 251, .9);
     border-color: rgba(131, 133, 247, 1);
     border-style: solid none;
     border-width: .2em;
-    color: rgba(131, 133, 247, 1);
+    color: rgba(101, 103, 217, 1);
     font-weight: bold;
     font-size: 2em;
     left: 0;
@@ -63,6 +64,10 @@ div.banner {
     width: 100%;
 }
 
+div.banner .origin {
+    color: black;
+}
+
 circle.destination {
     stroke: rgba(255, 184, 28, 1);
     stroke-width: 5px;
@@ -71,6 +76,7 @@ circle.destination {
 }
 
 div.difficulty {
+    display: none;
     position: absolute;
     top: 20%;
     left: 0;

@@ -1,12 +1,26 @@
 define(
   ['jquery', 'geo', 'roseutils'],
   function($, geo, roseutils) {
-  var $w = $(window)
-  var hfull = $w.height()
-  var hhalf = (hfull / 2) | 0;
+    var $w = $(window)
+    var hfull = $w.height()
+    var hhalf = (hfull / 2) | 0;
     var hquarter = (hhalf / 2) | 0;
 
     var destinationRadius = 20
+
+    var successMessages = [
+      "That's it!",
+      "Good job!",
+      "Wow!",
+      "Outstandingly astonishingly exceptional!",
+      "I stand in awe!"
+    ]
+
+    var failureMessages = [
+        function(missedBy) { return "Off by " + (missedBy | 0) + "°!" },
+        function(missedBy) { return "About " + (missedBy | 0) + "° are saying you are wrong!" },
+        function(missedBy) { return "So close! (" + (missedBy | 0) + "°)" }
+    ]
 
     function displayBanner(text) {
       var $fog = $('div#fog')
@@ -23,11 +37,11 @@ define(
     }
 
     function indicateSuccess() {
-      return displayBanner("Nailed it!")
+      return displayBanner(roseutils.choose(successMessages))
     }
 
     function indicateFailure(missedBy) {
-      return displayBanner("No! Missed by " + (missedBy | 0) + " degrees.")
+      return displayBanner(roseutils.choose(failureMessages)(missedBy))
     }
 
     function indicateDestination(destinationCircle, centerx, centery) {

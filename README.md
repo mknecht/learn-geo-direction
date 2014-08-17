@@ -20,7 +20,7 @@ TODOs
 
 - [X] Indicate success or failure
 - [X] Display actual direction after click.
-- [ ] Display introduction when starting the game.
+- [X] Display introduction when starting the game.
 - [X] Introduce different difficulty levels: boring (180 degrees), easy (90), challenging (45), nerdy (10), insane(3)
 - [X] Stop moving selector after selection (click).
 - [X] Center the compass rose.

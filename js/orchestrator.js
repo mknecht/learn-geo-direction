@@ -39,8 +39,13 @@ define(
         })
 
         roseApi.loadExternalSvg(function() {
-          selectorApi.setSelector('easy')
-          that.startNewRound()
+          var cleanupGreeting = challengerApi.greet()
+          setTimeout(function() {
+            cleanupGreeting()
+            selectorApi.showMenu()
+            selectorApi.setSelector('easy')
+            that.startNewRound()
+          }, 4000)
         })
       },
       startNewRound: function() {

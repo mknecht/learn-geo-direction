@@ -4,6 +4,8 @@ define(['jquery', 'roseutils'], function($, roseutils) {
   var hhalf = (hfull / 2) | 0;
   var hquarter = (hhalf / 2) | 0;
 
+  var $menuDiv = $('div#difficulty')
+
   var selectionRadius = hquarter + 5;
 
   function getSelectors() {
@@ -143,7 +145,7 @@ define(['jquery', 'roseutils'], function($, roseutils) {
         }).sort(function(a, b) {
           return a.tolerance < b.tolerance
         }).forEach(function(selector) {
-          var innerDiv = $('<div></div>').appendTo('div#difficulty')
+          var innerDiv = $('<div></div>').appendTo($menuDiv)
           var button = $('<button value="' + selector.id + '">' + selector.id + '</button>').appendTo(innerDiv)
           button.click(function() {
             onClick(selector)
@@ -155,6 +157,9 @@ define(['jquery', 'roseutils'], function($, roseutils) {
         $('div#difficulty').find('button.active').removeClass('active')
         $('div#difficulty').find('button[value="' + id + '"]').addClass("active")
         this.selector = selected
+      },
+      showMenu: function() {
+        $menuDiv.show()
       },
       startCurrentSelector: function(onSelect) {
         var selected = this.selector
