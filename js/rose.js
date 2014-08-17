@@ -93,7 +93,7 @@ define(
                    .attr("viewBox", "0 0 " + ($w.width() | 0) + " " + hfull)
                    .attr("preserveAspectRatio", "xMaxYMax meet")
 
-    var centerx = hhalf;
+    var centerx = $w.width()/2;
     var centery = hhalf;
 
     var destinationRadius = 20
@@ -140,11 +140,10 @@ define(
       var $roseDiv = $('<div id="rosediv"></div').appendTo('body')
       $roseDiv
       .height(hhalf)
-      .width("50%")
       .addClass("rose")
       .css({
-        top: hquarter,
-        left: hquarter
+        top: centery - hquarter,
+        left: centerx - hquarter
       })
       var $svg = $(roseElement).appendTo($roseDiv)
       var roseSvg = d3.select('#rosediv').select('svg')

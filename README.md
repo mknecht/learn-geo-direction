@@ -23,7 +23,7 @@ TODOs
 - [ ] Display introduction when starting the game.
 - [X] Introduce different difficulty levels: boring (180 degrees), easy (90), challenging (45), nerdy (10), insane(3)
 - [X] Stop moving selector after selection (click).
-- [ ] Center the compass rose.
+- [X] Center the compass rose.
 - [ ] Use SCSS to centralize colors, and to make z-indizes explicit.
 
 Possibly:
