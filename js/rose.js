@@ -137,8 +137,8 @@ define(
     }
 
     function insertRoseSvg(roseElement) {
-      var $rosediv = $('<div id="rosediv"></div').appendTo('body')
-      $rosediv
+      var $roseDiv = $('<div id="rosediv"></div').appendTo('body')
+      $roseDiv
       .height(hhalf)
       .width("50%")
       .addClass("rose")
@@ -146,7 +146,7 @@ define(
         top: hquarter,
         left: hquarter
       })
-      var $svg = $(roseElement).appendTo($rosediv)
+      var $svg = $(roseElement).appendTo($roseDiv)
       var roseSvg = d3.select('#rosediv').select('svg')
                     .attr("height", hhalf)
                     .attr("width", hhalf)
@@ -222,20 +222,27 @@ define(
         giveFeedbackAndStartNewRound(angle[0], selector)
       }
 
-      $('body').on('mousemove', onMouseMove)
-      $('body').on('click', onClick)
+      var $roseDiv = $('div#rosediv')
+      $roseDiv.on('mousemove', onMouseMove)
+      $roseDiv.on('click', onClick)
+      $interactDiv.on('mousemove', onMouseMove)
+      $interactDiv.on('click', onClick)
 
       return function() {
-        $('body').off('mousemove', onMouseMove)
-        $('body').off('click', onClick)
+        $interactDiv.off('mousemove', onMouseMove)
+        $interactDiv.off('click', onClick)
+        $roseDiv.off('mousemove', onMouseMove)
+        $roseDiv.off('click', onClick)
       }
     }
 
     var api = Object.create({
-      loadGame: function() {
-        // load compass rose
+      loadAndStartGame: function() {
+        var that = this;
         d3.xml("images/rose.svg", "image/svg+xml", function(xml) {
           insertRoseSvg(xml.documentElement)
+          that.setSelector('easy')
+          that.startNewRound()
         })
       },
       cleanupCurrentSelector: function() {
@@ -261,10 +268,6 @@ define(
         this.useCurrentSelector()
         geo.chooseNewDestination()
         updateDestination(geo.destination.label)
-      },
-      startGame: function() {
-        this.setSelector('easy')
-        this.startNewRound()
       }
     })
 

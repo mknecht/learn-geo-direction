@@ -18,7 +18,6 @@ require.config({
 
 require(['jquery', 'rose'], function($, rose) {
   $(function() {
-    rose.loadGame()
-    rose.startGame()
+    rose.loadAndStartGame()
   })
 })
