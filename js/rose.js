@@ -104,12 +104,16 @@ define(
                             .attr('r', destinationRadius)
                             .classed("destination", true)
 
-    $.each(getSelectors(), function(id) {
+    $.map(getSelectors(), function(value, key) {
+      return $.extend({id: key}, value)
+    }).sort(function(a, b) {
+      return a.tolerance < b.tolerance
+    }).forEach(function(selector) {
       var innerDiv = $('<div></div>').appendTo('div#difficulty')
-      var button = $('<button value="' + id + '">' + id + '</button>').appendTo(innerDiv)
+      var button = $('<button value="' + selector.id + '">' + selector.id + '</button>').appendTo(innerDiv)
       button.click(function() {
         api.cleanupCurrentSelector()
-        api.setSelector(id)
+        api.setSelector(selector.id)
         api.useCurrentSelector()
       })
     })
@@ -242,7 +246,7 @@ define(
         var selected = getSelectors()[id]
         selected.unbind = reactToMouseMovementAndClicks(selected)
         $('div#difficulty').find('button.active').removeClass('active')
-        $('div#difficulty').find('button#' + id).addClass("active")
+        $('div#difficulty').find('button[value="' + id + '"]').addClass("active")
         this.selector = selected
       },
       useCurrentSelector: function() {
